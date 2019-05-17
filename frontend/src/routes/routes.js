@@ -6,6 +6,7 @@ const Routes = () => (
     <Router>
             <Route exact path="/" component={SearchBar}/>
             <Route path="/item" component={Results}/>
+            {/* <Route path="/item:query" component={Results}/> */}
     </Router>
 );
 
