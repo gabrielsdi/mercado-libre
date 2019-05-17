@@ -4,8 +4,8 @@ import SearchBar from './../pages/SearchBar';
 import Results from './../pages/Results';
 const Routes = () => (
     <Router>
-            <Route exact path="/" component={SearchBar} />
-            <Route path="/item" component={Results} />
+            <Route exact path="/" component={SearchBar}/>
+            <Route path="/item" component={Results}/>
     </Router>
 );
 

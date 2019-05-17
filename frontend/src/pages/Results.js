@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import '../styles/SearchBar.sass';
 
+
+
 class Result extends Component {  
 
-   render(){
+  result = this.props.location.state.result.results;
+  listItems = this.result.map((d) => <li key={d.id}>{d.title}</li>);
+  
+  render(){
+    console.log("los resultados de busqueda", this.result);
+
     return (
-        <div className="SearchBar">
-         <p>Estoy en result</p>
-        </div>
+        <div className="SearchBar"> 
+          <p>{this.listItems}</p>    
+        </div>   
       );
    }
     

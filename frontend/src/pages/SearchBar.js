@@ -4,31 +4,42 @@ import { createHashHistory } from 'history'
 
 var searchService;
 var description = "";
+var query;
 export const history = createHashHistory();
 
 class SearchBar extends Component {    
+    
+    handleQueryChange(e) {
+        query = e.target.value;      
+     }
+
+     handleClick = () => {
+        this.search(query);      
+      }
 
     search(query){
-        var url = "http://localhost:3030/api/query/zapatillas";
+        console.log("la query que me llega", query);
+        var url = "http://localhost:3030/api/query/" + query;
         fetch(url)
         .then((response) => {
             return response.json();
         })
-        .then((data) => {
-            description = data.query;
-            console.log("description: ", description);         
+        .then((data) => {            
+            description = data;
+            console.log("description: ", description);
+            this.navigateToResultPage();         
         })
     }   
 
-    submitForm = () => {
-        this.props.history.push('/item')
+    navigateToResultPage = () => {
+        this.props.history.push({pathname: '/item',state: {result : description}})
     }
 
    render(){
     return (
         <div className="SearchBar">
-         <input id="search-bar" type="text"></input>
-         <button onClick={this.submitForm.bind(this)}>Buscar</button>
+         <input id="search-bar" type="text" value={this.query} onChange={this.handleQueryChange}></input>
+         <button onClick={this.handleClick}>Buscar</button>
          <p>{description}</p>
         </div>
       );
