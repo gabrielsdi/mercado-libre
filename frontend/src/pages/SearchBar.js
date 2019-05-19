@@ -32,14 +32,14 @@ class SearchBar extends Component {
     }   
 
     navigateToResultPage = () => {
-        this.props.history.push({pathname: '/item',state: {result : description}})
+        this.props.history.push({pathname: '/items', search : "?search=" + query})
     }
 
    render(){
     return (
         <div className="SearchBar">
          <input id="search-bar" type="text" value={this.query} onChange={this.handleQueryChange}></input>
-         <button onClick={this.handleClick}>Buscar</button>
+         <button onClick={this.navigateToResultPage}>Buscar</button>
          <p>{description}</p>
         </div>
       );
