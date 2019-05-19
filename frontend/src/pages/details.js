@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/SearchBar.sass';
+import '../styles/SearchBar.scss';
 
 class Details extends Component {  
 

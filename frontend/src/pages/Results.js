@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/SearchBar.sass';
+import '../styles/SearchBar.scss';
 const queryString = require('query-string');
 
 
@@ -7,6 +7,7 @@ class Result extends Component {
 
   listItems;
   query;
+  resultNotFoundErrorMSG = "No se encontraron resultados para su busqueda";
 
   componentDidMount() {
     var props = this.props.location.search;
@@ -19,20 +20,31 @@ class Result extends Component {
     var url = "http://localhost:3030/api/query/" + query;
     fetch(url)
     .then((response) => {
+
+        if(response.status != 200)          
+          return;
+              
         return response.json();
     })
     .then((data) => {
-        let result = data.results;     
-        this.listItems = result.map((d) => 
-        <div key={d.id}>
-          <li>{d.title}</li>          
-          <a href="" onClick={() => this.navigateToDetailsPage(d.id)}>Ver detalle</a>
-        </div>);
-
-        //Show only 4 items
-        this.listItems.length = 4;
-        this.setState({listItems: this.listItems})
-        console.log("Items: ", result);                   
+      if(data){
+        let result = data.results;  
+          this.listItems = result.map((d) => 
+          <div key={d.id}>
+            <li>{d.title}</li>          
+            <a href="" onClick={() => this.navigateToDetailsPage(d.id)}>Ver detalle</a>
+          </div>);
+  
+          //Show only 4 items
+          this.listItems.length = 4;
+          this.setState({listItems: this.listItems})
+          console.log("Items: ", result); 
+        }  
+        else{
+          this.listItems = this.resultNotFoundErrorMSG;
+          this.setState({listItems: this.listItems})
+        } 
+                         
     })
 }   
 

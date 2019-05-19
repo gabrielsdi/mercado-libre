@@ -1,51 +1,48 @@
 import React, { Component } from 'react';
-import '../styles/SearchBar.sass';
+import '../styles/SearchBar.scss';
 import { createHashHistory } from 'history'
 
-var searchService;
-var description = "";
-var query;
+
 export const history = createHashHistory();
 
-class SearchBar extends Component {    
-    
+var query;
+
+class SearchBar extends Component {
+
+    query;
+    description
+    placeHolder = "Nunca dejes de buscar";
+
     handleQueryChange(e) {
-        query = e.target.value;      
-     }
-
-     handleClick = () => {
-        this.search(query);      
-      }
-
-    search(query){
-        console.log("la query que me llega", query);
-        var url = "http://localhost:3030/api/query/" + query;
-        fetch(url)
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {            
-            description = data;
-            console.log("description: ", description);
-            this.navigateToResultPage();         
-        })
-    }   
-
-    navigateToResultPage = () => {
-        this.props.history.push({pathname: '/items', search : "?search=" + query})
+        query = e.target.value;
     }
 
-   render(){
-    return (
-        <div className="SearchBar">
-         <input id="search-bar" type="text" value={this.query} onChange={this.handleQueryChange}></input>
-         <button onClick={this.navigateToResultPage}>Buscar</button>
-         <p>{description}</p>
-        </div>
-      );
-   }
+    navigateToResultPage = () => {
+        if(query === undefined)
+            query = "";
 
-    
+        this.props.history.push({ pathname: '/items', search: "?search=" + query })
+    }
+
+    render() {
+        return (
+            <div>
+                <nav className="navbar navbar-light bg-yellow">
+                    <i className="navbar-brand nav-logo"></i>
+                    <form className="form-inline">
+                        <div className="input-group">
+                            <input className="form-control mr-sm-2 search-bar" type="query" id="search-bar" placeholder={this.placeHolder} aria-label="Search" value={query} onChange={this.handleQueryChange}></input>
+                            <div className="input-group-append">
+                                <button className="btn btn nav-search-button" type="button" onClick={this.navigateToResultPage}><i className="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </nav>
+            </div>
+        );
+    }
+
+
 }
 
 export default SearchBar;
