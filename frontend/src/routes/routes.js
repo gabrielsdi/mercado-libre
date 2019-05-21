@@ -5,8 +5,8 @@ import Results from './../pages/Results';
 import Details from './../pages/details';
 const Routes = () => (
     <Router>
-            <Route exact path="/" component={SearchBar}/> 
-            <Route exact path="/items" search="?search=:query" component={Results}/>
+            <Route path="/" component={SearchBar}/> 
+            <Route exact path="/items" search="?search=:query" component={Results} />
             <Route exact path="/items/:id" component={Details}/>
     </Router>
 );

@@ -21,7 +21,7 @@ class SearchBar extends Component {
         if(query === undefined)
             query = "";
 
-        this.props.history.push({ pathname: '/items', search: "?search=" + query })
+        this.props.history.push({ pathname: '/items', search: "?search=" + query });       
     }
 
     render() {

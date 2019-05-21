@@ -4,6 +4,6 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Routes from './routes/routes';
 
-ReactDOM.render(<Routes />, document.getElementById('search-bar'));
 
+ReactDOM.render(<Routes />, document.getElementById('root'));
 serviceWorker.unregister();
