@@ -1,0 +1,32 @@
+.short-desc{
+    padding: 20px;
+    text-align: left; 
+    >div{
+        bottom: 20px;
+        position: relative;
+    }   
+}
+
+.item-img{
+    padding: 20px;
+    height: 100%;
+}
+
+.items-card{
+    max-width: 800px !important;
+}
+
+.buy-button{
+    width: 100%;
+}
+
+.item-desc{
+    text-align: left;
+    p{
+        font-size: 12px;
+    }
+}
+
+.row{
+    margin-bottom: 100px;
+}
