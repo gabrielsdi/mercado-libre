@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 //Assets
 import '../Global/css/Results.scss';
 
+//Plugins
 var Loader = require('react-loader');
 
 
@@ -74,14 +75,14 @@ class Results extends Component {
             this.listItems.push(
               <li className="item-container" key={result[i].id} >
                 <div>
-                  <img src={result[i].picture}></img>
+                  <img id={"item-image-" + i} src={result[i].picture} alt={result[i].title} aria-label="Imagen item"></img>
                   <div className="item-description">
-                    <p>$ {result[i].price.amount}</p>
+                    <p id={"item-price-" + i} aria-labelledby={result[i].price.amount}>$ {result[i].price.amount}</p>
                     <Link to={'/items/' + result[i].id}>
-                      <a href="">{result[i].title}</a>
+                      <p id={"item-title-" + i} aria-labelledby={result[i].title}>{result[i].title}</p>
                     </Link>
                   </div>
-                  <p className="item-adress">{result[i].address}</p>
+                  <p id={"item-address-" + i} aria-labelledby={result[i].address} className="item-adress">{result[i].address}</p>
                 </div>
               </li>)
           }
@@ -102,8 +103,7 @@ class Results extends Component {
   }
 
   render() {   
-    const { isLoaded } = this.state; 
-    console.log("renderiza");
+    const { isLoaded } = this.state;
     return (
       <div>
          <div className="loader-wrapper">        

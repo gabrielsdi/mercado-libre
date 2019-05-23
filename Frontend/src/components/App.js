@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Header from './Global/Header';
 import Content from './Global/Content';
 
+
 class App extends Component {
 
   static propTypes = {
