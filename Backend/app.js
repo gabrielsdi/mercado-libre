@@ -34,7 +34,7 @@ app.get('/api/query/:query', function (req, res) {
         items.push({
           id: resultsItems[i].id, title: resultsItems[i].title,
           price: { currency: resultsItems[i].currency_id, amount: resultsItems[i].price, decimals: 0 },
-          picture: resultsItems[i].thumbnail, condition: resultsItems[i].condition, free_shipping: resultsItems[i].free_shipping, adress: resultsItems[i].address.city_name
+          picture: resultsItems[i].thumbnail, condition: resultsItems[i].condition, free_shipping: resultsItems[i].free_shipping, address: resultsItems[i].address.city_name
         })
       }
 

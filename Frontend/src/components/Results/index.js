@@ -56,21 +56,42 @@ class Results extends Component{
           .then((data) => {
             this.data = true;
             if (data) {
-              let result = data.results;
-              this.listItems = result.map((d) =>
-                <li className="item-container" key={d.id} >
-                  <div>
-                    <img src={d.thumbnail}></img>
-                    <div className="item-description">
-                      <p>$ {d.price}</p>
-                      <Link to={'/items/' + d.id}>
-                      <a href="">{d.title}</a>
+              let result = data.items[0];  
+              this.listItems = [];
+              for (let i = 0; i < result.length; i++) {
+                    console.log(result[i]);  
+                    this.listItems.push(  
+                    <li className="item-container" key={result[i].id} >
+                      <div>
+                     <img src={result[i].picture}></img>
+                     <div className="item-description">
+                       <p>$ {result[i].price.amount}</p>
+                       <Link to={'/items/' + result[i].id}>
+                       <a href="">{result[i].title}</a>
                       </Link>
-                    </div>
-                    <p className="item-adress">{d.address.city_name}</p> </div>
-                </li>);
-              //Show only 4 items
-              this.listItems.length = 4;
+                     </div> 
+                     <p className="item-adress">{result[i].address}</p> 
+                     </div>                     
+                    </li>)         
+              }
+
+               this.listItems.length = 4;
+
+
+              // this.listItems = result.map((d) =>
+              //   <li className="item-container" key={d.id} >
+              //     <div>
+              //       <img src={d.thumbnail}></img>
+              //       <div className="item-description">
+              //         <p>$ {d.price}</p>
+              //         <Link to={'/items/' + d.id}>
+              //         <a href="">{d.title}</a>
+              //         </Link>
+              //       </div>
+              //        </div>
+              //   </li>);
+              // //Show only 4 items
+              
               this.setState({ listItems: this.listItems });
               console.log("Items: ", result);
               this.renderContainer();              
