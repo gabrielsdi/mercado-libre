@@ -1,6 +1,6 @@
 //Dependencies
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 //Assets
 import './css/Header.scss';
@@ -8,14 +8,14 @@ import './css/Header.scss';
 class Header extends Component {
 
 	placeHolder = "Nunca dejes de buscar";
-
+	
 	constructor(props) {
 		super(props);
 		this.state = {
-			query: ""
+			query: "",		
 		}
 
-		this.handleQueryChange = this.handleQueryChange.bind(this);
+		this.handleQueryChange = this.handleQueryChange.bind(this);		
 	}
 	
 	handleQueryChange(e) {
@@ -26,11 +26,13 @@ class Header extends Component {
 		}
 	}
 
-	handleOnClick = () => {		
-		this.setState({redirect: true});
+	handleOnClick = () => {
+		var url = '/items?search=' + this.state.query;
+		this.props.history.push(url);			
 	  }
+	 
 
-	render() {
+	render() {		
 		return (
 			<div>
 				<nav className="navbar navbar-light bg-yellow">
@@ -38,10 +40,8 @@ class Header extends Component {
 					<form className="form-inline">
 						<div className="input-group">
 							<input className="form-control mr-sm-2 search-bar" type="query" id="search-bar" placeholder={this.placeHolder} aria-label="Search" value={this.state.query} onChange={this.handleQueryChange}></input>
-							<div className="input-group-append">
-								<Link to={'/items?search=' + this.state.query}>
-									<button className="btn btn nav-search-button" type="button"><i className="fas fa-search"></i></button>
-								</Link>
+							<div className="input-group-append">								
+									<button className="btn btn nav-search-button" type="button" onClick={() => this.handleOnClick()}><i className="fas fa-search"></i></button>								
 							</div>
 						</div>
 					</form>
@@ -51,4 +51,4 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+export default withRouter(Header);

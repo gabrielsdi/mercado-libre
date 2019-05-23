@@ -7,6 +7,7 @@ import Header from './Global/Header';
 import Content from './Global/Content';
 
 class App extends Component {
+
   static propTypes = {
     children: PropTypes.object.isRequired
   }
@@ -15,9 +16,10 @@ class App extends Component {
    const {children} = this.props;
    
     return (
-      <div className="App">
-        <Header/>
-        <Content body={children} />      
+      
+      <div className="App">        
+        <Header/>       
+            <Content body={children} /> 
       </div>
     );
   }

@@ -1,116 +1,120 @@
 //Dependencies
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 
 //Assets
 import '../Global/css/Results.scss';
 
+var Loader = require('react-loader');
+
 
 const queryString = require('query-string');
 
 
-class Results extends Component{
-    listItems;
-    ItemsContainer;
-    query;
-    resultNotFoundErrorMSG = "No se encontraron resultados para su busqueda";  
-    
-    componentDidMount(){
-        this.init();
-    }
+class Results extends Component {
+  listItems;
+  itemsContainer;
+  query;
+  resultNotFoundErrorMSG = "No se encontraron resultados para su busqueda";
 
-      componentDidUpdate(){
-        this.init();
-    }
+  constructor() {
+		super();
+	
+		this.state = {
+		  isLoaded: false
+		};
+	  }
 
-      renderContainer() {
-        this.ItemsContainer = <div>
-          <div className="card items-card">
-            <div className="card-body">
-              <p>{this.listItems}</p>
-            </div>
-          </div>
+  async componentDidMount() {
+    this.init();
+  }
+
+  //Is not working correctly
+  //   async componentDidUpdate(){    
+  //     this.init();
+  // }
+
+  renderContainer() {
+    this.itemsContainer = <div>
+      <div className="card items-card">
+        <div className="card-body">
+          <p>{this.listItems}</p>
         </div>
-    
-        this.setState({ ItemsContainer: this.ItemsContainer });       
-      }
+      </div>      
+    </div>
 
-      init(){          
-        var props = this.props.location.search;
-        var searchQuery = queryString.parse(props);
-        this.query = searchQuery.search;        
-        this.search(this.query);
-      }
+    this.setState({ isLoaded: true });
+  }
 
-      search(query) {
-        console.log("la query que me llega", query);
-        var url = "http://localhost:3030/api/query/" + query;
-        fetch(url)
-          .then((response) => {
-    
-            if (response.status !== 200)
-              return;
-    
-            return response.json();
-          })
-          .then((data) => {
-            this.data = true;
-            if (data) {
-              let result = data.items[0];  
-              this.listItems = [];
-              for (let i = 0; i < result.length; i++) {
-                    console.log(result[i]);  
-                    this.listItems.push(  
-                    <li className="item-container" key={result[i].id} >
-                      <div>
-                     <img src={result[i].picture}></img>
-                     <div className="item-description">
-                       <p>$ {result[i].price.amount}</p>
-                       <Link to={'/items/' + result[i].id}>
-                       <a href="">{result[i].title}</a>
-                      </Link>
-                     </div> 
-                     <p className="item-adress">{result[i].address}</p> 
-                     </div>                     
-                    </li>)         
-              }
+  init() {
+    this.setState({ itemsContainer: this.itemsContainer });
+    var props = this.props.location.search;    
+    var searchQuery = queryString.parse(props);
+    this.query = searchQuery.search;
+    this.search(this.query);
+  }
 
-               this.listItems.length = 4;
+  search(query) {
+    var url = "http://localhost:3030/api/query/" + query;
+    fetch(url)
+      .then((response) => {
 
+        if (response.status !== 200)
+          return;
 
-              // this.listItems = result.map((d) =>
-              //   <li className="item-container" key={d.id} >
-              //     <div>
-              //       <img src={d.thumbnail}></img>
-              //       <div className="item-description">
-              //         <p>$ {d.price}</p>
-              //         <Link to={'/items/' + d.id}>
-              //         <a href="">{d.title}</a>
-              //         </Link>
-              //       </div>
-              //        </div>
-              //   </li>);
-              // //Show only 4 items
-              
-              this.setState({ listItems: this.listItems });
-              console.log("Items: ", result);
-              this.renderContainer();              
-            }
-            else {
-              this.listItems = this.resultNotFoundErrorMSG;
-              this.setState({ listItems: this.listItems });
-              this.renderContainer();              
-            }
-    
-          })
-      }
+        return response.json();
+      })
+      .then((data) => {
+        this.data = true;
+        if (data) {
+          let result = data.items[0];
+          this.listItems = [];
+          for (let i = 0; i < result.length; i++) {
+            console.log(result[i]);
+            this.listItems.push(
+              <li className="item-container" key={result[i].id} >
+                <div>
+                  <img src={result[i].picture}></img>
+                  <div className="item-description">
+                    <p>$ {result[i].price.amount}</p>
+                    <Link to={'/items/' + result[i].id}>
+                      <a href="">{result[i].title}</a>
+                    </Link>
+                  </div>
+                  <p className="item-adress">{result[i].address}</p>
+                </div>
+              </li>)
+          }
 
-      render() {
-        console.log("renderiza");        
-        return (
-          <div>{this.ItemsContainer}</div>
-        );
-      }
+          //Show only 4 items
+          this.listItems.length = 4;
+          this.setState({ listItems: this.listItems });
+          console.log("Items: ", result);
+          this.renderContainer();
+        }
+        else {
+          this.listItems = this.resultNotFoundErrorMSG;
+          this.setState({ listItems: this.listItems });
+          this.renderContainer();
+        }
+
+      })
+  }
+
+  render() {   
+    const { isLoaded } = this.state; 
+    console.log("renderiza");
+    return (
+      <div>
+         <div className="loader-wrapper">        
+        <Loader loaded={isLoaded}>
+          <div className="loaded-contents">{this.itemsContainer}</div>
+        </Loader>
+      </div>
+      
+      </div>
+    );
+  }
 }
 
 export default Results;

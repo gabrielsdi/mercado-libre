@@ -4,6 +4,9 @@ import React, { Component } from 'react'
 //Assets
 import '../Global/css/Details.scss'
 
+
+var Loader = require('react-loader');
+
 class Details extends Component {
 
     itemDetail;
@@ -11,6 +14,15 @@ class Details extends Component {
     itemImg;
     itemShortDesc;
     itemDesc;
+    itemContainer;
+
+    constructor() {
+		super();
+	
+		this.state = {
+		  isLoaded: false
+		};
+	  }
 
     componentDidMount() {
         const { id } = this.props.match.params
@@ -53,30 +65,41 @@ class Details extends Component {
                 this.setState({ itemImg: this.itemImg });
                 this.setState({ itemShortDesc: this.itemShortDesc })
                 this.setState({ itemDetail: this.itemDetail });
+                this.renderContainer();
             })
-    }   
-
-    render() {   
-        return (
-            <div className="Details">
-                <div className="card items-card">
-                    <div className="card-body">
-                        <div class="row">
-                            <div className="col-8">
-                                {this.itemImg}
-                            </div>
-                            <div className="col-4"> {this.itemShortDesc}</div>
-                        </div>
-                        <div className="col-12">
-                            <div className="item-desc">
-                            <h5>Descripción del producto</h5>
-                            <p>{this.itemDetail}</p>
-                            </div>
-                        </div>
+    } 
+    
+    renderContainer(){
+        this.itemContainer =  <div className="Details">
+        <div className="card items-card">
+            <div className="card-body">
+                <div class="row">
+                    <div className="col-8">
+                        {this.itemImg}
+                    </div>
+                    <div className="col-4"> {this.itemShortDesc}</div>
+                </div>
+                <div className="col-12">
+                    <div className="item-desc">
+                    <h5>Descripción del producto</h5>
+                    <p>{this.itemDetail}</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>    
+    this.setState({ itemContainer: this.itemContainer });
+    this.setState({ isLoaded: true });
+    }
 
+    render() {
+        const { isLoaded } = this.state;    
+        return (
+            <div className="loader-wrapper">        
+        <Loader loaded={isLoaded}>
+          <div className="loaded-contents">{this.itemContainer}</div>
+        </Loader>
+        </div>        
         );
     }
 }
