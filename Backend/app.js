@@ -37,8 +37,6 @@ app.get('/api/query/:query', function (req, res) {
           picture: resultsItems[i].thumbnail, condition: resultsItems[i].condition, free_shipping: resultsItems[i].free_shipping, address: resultsItems[i].address.city_name
         })
       }
-
-      //res.send(info);
       res.json({ author: { name: "Gabriel", lastname: "Splendiani" }, categories: [categories], items: [items] })
     }
   })
@@ -61,7 +59,6 @@ app.get('/api/item/:id', function (req, res) {
       .catch(error => console.log('There was a problem!', error))
   ))
     .then(data => {
-      console.log("data", data[0].id);
       res.json({
         author: { name: "Gabriel", lastname: "Splendiani" },
         item: {
