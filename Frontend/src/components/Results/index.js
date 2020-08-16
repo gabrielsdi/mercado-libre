@@ -22,7 +22,7 @@ class Results extends Component {
 		super();
 	
 		this.state = {
-		  isLoaded: false
+      isLoaded: false
 		};
 	  }
 
@@ -31,8 +31,8 @@ class Results extends Component {
   }
 
   //Is not working correctly
-  //   async componentDidUpdate(){    
-  //     this.init();
+  // async componentDidUpdate(){    
+  //   this.init();
   // }
 
   renderContainer() {
