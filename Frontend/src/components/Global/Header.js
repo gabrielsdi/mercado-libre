@@ -27,8 +27,9 @@ class Header extends Component {
 	}
 
 	handleOnClick = () => {
-		var url = '/items?search=' + this.state.query;
-		this.props.history.push(url);			
+		var url = '/items?search=' + this.state.query;	
+		this.props.history.push(url);	
+		window.location.reload(true);		
 	  }
 	 
 
